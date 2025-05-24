@@ -22,6 +22,8 @@
             align-items: center;
             flex-direction: column;
             z-index: 999;
+            text-align: center;
+            padding: 20px;
         }
 
         #enterFullscreen {
@@ -61,23 +63,46 @@
         const prompt = document.getElementById('fullscreenPrompt');
         const content = document.getElementById('mainContent');
 
+        function isIOS() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function isInStandaloneMode() {
+            return ('standalone' in window.navigator) && window.navigator.standalone;
+        }
+
+        // Tampilkan instruksi jika di iOS dan bukan standalone
+        if (isIOS() && !isInStandaloneMode()) {
+            btn.style.display = 'none';
+
+            const info = document.createElement('div');
+            info.innerHTML = `
+                <p style="max-width: 400px; margin-top: 20px;">
+                    Mode fullscreen tidak tersedia langsung di iPhone/iPad.<br><br>
+                    Untuk pengalaman layar penuh, tambahkan halaman ini ke Layar Utama:<br><br>
+                    <strong>1.</strong> Ketuk ikon <strong>Bagikan</strong> (kotak dengan panah ke atas)<br>
+                    <strong>2.</strong> Pilih <strong>"Tambahkan ke Layar Utama"</strong><br>
+                    <strong>3.</strong> Buka dari ikon di layar utama
+                </p>
+            `;
+            prompt.appendChild(info);
+        }
+
         btn.addEventListener('click', () => {
-            const elem = document.documentElement; // bisa juga pakai document.body
+            const elem = document.documentElement;
 
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { // Safari
+            } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { // IE/Edge
+            } else if (elem.msRequestFullscreen) {
                 elem.msRequestFullscreen();
             }
 
-            // Tampilkan konten
             prompt.style.display = 'none';
             content.style.display = 'block';
         });
 
-        // Jika keluar fullscreen (baik lewat ESC atau gesture)
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
                 prompt.style.display = 'flex';
@@ -88,9 +113,9 @@
         function logout() {
             if (document.fullscreenElement) {
                 document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) { // Safari
+            } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { // IE/Edge
+            } else if (document.msExitFullscreen) {
                 document.msExitFullscreen();
             }
         }
