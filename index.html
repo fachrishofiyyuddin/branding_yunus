@@ -1,189 +1,82 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GamerPro - Personal Branding</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
-      scroll-behavior: smooth;
-    }
-
-    a {
-      text-decoration: none;
-      color: #0ff;
-    }
-
-    header {
-      height: 100vh;
-      background: url('https://placehold.co/1200x800/111/fff?text=Gamer+Background') center/cover no-repeat;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-content h1 {
-      font-size: 3rem;
-    }
-
-    .highlight {
-      color: #0ff;
-    }
-
-    .btn {
-      margin-top: 20px;
-      padding: 10px 25px;
-      background: #0ff;
-      color: #000;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #0cc;
-    }
-
-    section {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: 0.6s ease-out;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-      color: #0ff;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 10px;
-      border: 2px solid #0ff;
-    }
-
-    .social-links {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      background: #0ff;
-      color: #000;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #111;
-      color: #888;
-    }
-  </style>
-</head>
-<body>
-  <!-- Hero Section -->
-  <header>
-    <div class="hero-content">
-      <h1>Hai, aku <span class="highlight">GamerPro</span></h1>
-      <p>Streamer | Content Creator | Pro Player</p>
-      <a href="#about" class="btn">Kenali Lebih Jauh</a>
-    </div>
-  </header>
-
-  <!-- About -->
-  <section id="about">
-    <h2>Tentang Saya</h2>
-    <p>Saya adalah seorang gamer yang berdedikasi, fokus di game kompetitif seperti Valorant, MLBB dan FPS lainnya. Saya membagikan tips, gameplay dan momen lucu ke komunitas melalui YouTube dan Twitch.</p>
-  </section>
-
-  <!-- Gallery -->
-  <section id="gallery">
-    <h2>Highlight Game</h2>
-    <div class="gallery">
-      <img src="https://placehold.co/300x200?text=Gameplay+1" alt="Gameplay 1">
-      <img src="https://placehold.co/300x200?text=Gameplay+2" alt="Gameplay 2">
-      <img src="https://placehold.co/300x200?text=Gameplay+3" alt="Gameplay 3">
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Kontak & Sosial Media</h2>
-    <p>Terhubung dengan saya di platform berikut:</p>
-    <ul class="social-links">
-      <li><a href="#">YouTube</a></li>
-      <li><a href="#">Twitch</a></li>
-      <li><a href="#">Instagram</a></li>
-      <li><a href="#">Discord</a></li>
-    </ul>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 GamerPro. Dibuat dengan ❤️ untuk komunitas gamer.</p>
-  </footer>
-
-  <script>
-    // Reveal on scroll
-    const sections = document.querySelectorAll("section");
-
-    const reveal = () => {
-      const scrollTop = window.scrollY;
-      sections.forEach(section => {
-        if (scrollTop > section.offsetTop - window.innerHeight + 100) {
-          section.classList.add("visible");
+    <meta charset="UTF-8">
+    <title>Fullscreen Web App</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: #f9fafb;
         }
-      });
-    };
 
-    window.addEventListener("scroll", reveal);
-    window.addEventListener("load", reveal);
-  </script>
+        #fullscreenPrompt {
+            position: fixed;
+            inset: 0;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        #enterFullscreen {
+            padding: 14px 24px;
+            font-size: 18px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #mainContent {
+            display: none;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="fullscreenPrompt">
+        <h1>Selamat datang</h1>
+        <p>Klik tombol di bawah untuk membuka tampilan fullscreen.</p>
+        <button id="enterFullscreen">Masuk Fullscreen</button>
+    </div>
+
+    <div id="mainContent">
+        <h1>Ini Halaman Fullscreen</h1>
+        <p>Konten utama di sini.</p>
+        <button onclick="logout()">Logout (Keluar Fullscreen)</button>
+    </div>
+
+    <script>
+        const btn = document.getElementById('enterFullscreen');
+        const prompt = document.getElementById('fullscreenPrompt');
+        const content = document.getElementById('mainContent');
+
+        btn.addEventListener('click', () => {
+            document.documentElement.requestFullscreen().then(() => {
+                prompt.style.display = 'none';
+                content.style.display = 'block';
+            }).catch((err) => {
+                alert('Gagal masuk fullscreen: ' + err.message);
+            });
+        });
+
+        function logout() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                alert("Keluar dari fullscreen.");
+            }
+        }
+    </script>
+
 </body>
+
 </html>
